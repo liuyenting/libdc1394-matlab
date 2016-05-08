@@ -23,6 +23,8 @@
 #include <mex.h>
 #include <dc1394/dc1394.h>
 
+#include "dc1394_system.h"
+
 #include "func_lut.h"
 
 /*
@@ -38,11 +40,3 @@ void mexFunction(int nlhs, mxArray *plhs[],
     if(!func_lut(command, nlhs, plhs, nrhs, prhs))
         mexErrMsgTxt("No such command");
 }
-
-void system_init_library(int nlhs, mxArray *plhs[],
-                         int nrhs, const mxArray *prhs[]) {
-};
-
-void system_free_library(int nlhs, mxArray *plhs[],
-                         int nrhs, const mxArray *prhs[]) {
-};
