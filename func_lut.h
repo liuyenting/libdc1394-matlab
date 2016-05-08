@@ -35,13 +35,15 @@ int func_lut(char *command,
     static void (*func_ptr_lut[])(int nlhs, mxArray *plhs[], 
                                   int nrhs, const mxArray *prhs[]) = {
         system_init_library,
-        system_free_library
+        system_free_library,
+        system_enumerate_devcies
     };
     
     // function name
     static const char *func_name_lut[] = {
         "init_library",
         "free_library",
+        "enumerate_devices",
         NULL
     };
     
