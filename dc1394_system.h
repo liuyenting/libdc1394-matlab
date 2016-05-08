@@ -25,6 +25,9 @@
 
 #include <mex.h>
 
+/*
+ * handle = dc1394( 'init_library' );
+ */
 void system_init_library(int nlhs, mxArray *plhs[],
                          int nrhs, const mxArray *prhs[]) {
     const int dc1394_obj_fields_cnt = 2;
@@ -34,11 +37,9 @@ void system_init_library(int nlhs, mxArray *plhs[],
     };
     
     // create MATLAB strucutre to store the handles
-    plhs[0] = mxCreateStructMatrix(1, 1, 
-                                   dc1394_obj_fields_cnt,
-                                   dc1394_obj_fields);
+    plhs[0] = mxCreateStructMatrix(1, 1, dc1394_obj_fields_cnt, dc1394_obj_fields);
     
-    // create the library object
+    // create the library handle
     dc1394_t *lib_obj = dc1394_new();
     
     // save the handle into the structure
@@ -52,8 +53,47 @@ void system_free_library(int nlhs, mxArray *plhs[],
                          int nrhs, const mxArray *prhs[]) {
 }
 
-void system_enumerate_devices(int nlhs, mxArray *plhs[], 
+/*
+ * cam_list = dc1394( 'enumerate_cameras', handle );
+ */
+void system_enumerate_cameras(int nlhs, mxArray *plhs[], 
                               int nrhs, const mxArray *prhs[]) {
+    if(nrhs != 1)
+        mexErrMsgTxt("Requires library handle");
+    
+    // parse the library handle
+    dc1394_t *lib_obj = *(dc1394_t **)mxGetPr(mxGetField(prhs[0], 0, "lib_obj");
+    dc1394error_t err;
+    
+    // enumerate the devices
+    dc1394camera_list_t *cam_list;
+    err = dc1394_camera_enumerate(lib_obj, &cam_list);
+    if(err != DC1394_SUCCESS) {
+        dc1394_free(lib_obj);
+        mexErrMsgTxt("Unable to enumerate cameras");
+    } else if(cam_list->num == 0) {
+        dc1394_free(lib_obj);
+        mexErrMsgTxt("No camera found");
+    } else {
+        // create the array to store GUIDs
+        plhs[0] = mxCreateNumericArray(1, cam_list->num, mxUINT64_CLASS, mxREAL);
+        uint64_t *output_mat = (uint64_t *)mxGetData(plhs[0]);
+        
+        // store the GUIDs into array
+        for(int nrow = 0; nrow < cam_list->num; nrow++)
+            output_mat[nrow] = cam_list->ids[nrow];
+        
+        // release the list
+        dc1394_camera_free_list(cam_list);
+    }
 }
+
+void system_init_camera(int nlhs, mxArray *plhs[],
+                        int nrhs, const mxArray *prhs[]) {
+};
+
+void system_free_camera(int nlhs, mxArray *plhs[],
+                        int nrhs, const mxArray *prhs[]) {
+};
 
 #endif
