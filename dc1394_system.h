@@ -27,10 +27,33 @@
 
 void system_init_library(int nlhs, mxArray *plhs[],
                          int nrhs, const mxArray *prhs[]) {
-};
+    const int dc1394_obj_fields_cnt = 2;
+    static const char *dc1394_obj_fields[dc1394_obj_fields_cnt] = {
+        "lib_obj",
+        "cam_obj"
+    };
+    
+    // create MATLAB strucutre to store the handles
+    plhs[0] = mxCreateStructMatrix(1, 1, 
+                                   dc1394_obj_fields_cnt,
+                                   dc1394_obj_fields);
+    
+    // create the library object
+    dc1394_t *lib_obj = dc1394_new();
+    
+    // save the handle into the structure
+    mxArray *data = mxCreateNumericMatrix(1, 1, mxUINT32_CLASS, mxREAL);
+    uint32_t *d32 = (uint32_t *)mxGetPr(data);
+    *d32 = (uint32_t)lib_obj;
+    mxSetField(plhs[0], 0, "lib_obj", data);
+}
 
 void system_free_library(int nlhs, mxArray *plhs[],
                          int nrhs, const mxArray *prhs[]) {
-};
+}
+
+void system_enumerate_devices(int nlhs, mxArray *plhs[], 
+                              int nrhs, const mxArray *prhs[]) {
+}
 
 #endif
