@@ -23,6 +23,8 @@
 #include <mex.h>
 #include <dc1394/dc1394.h>
 
+#include "func_lut.h"
+
 /*
  * The gateway function
  */
