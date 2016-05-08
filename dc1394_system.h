@@ -81,7 +81,7 @@ void system_enumerate_cameras(int nlhs, mxArray *plhs[],
         
         // store the GUIDs into array
         for(int nrow = 0; nrow < cam_list->num; nrow++)
-            output_mat[nrow] = cam_list->ids[nrow];
+            output_mat[nrow] = cam_list->ids[nrow].guid;
         
         // release the list
         dc1394_camera_free_list(cam_list);
