@@ -27,7 +27,7 @@
 #include <stdio.h>
 
 // using wrapper function to avoid illegal access
-void func_lut(char *command,
+int func_lut(char *command,
               int nlhs, mxArray *plhs[],
               int nrhs, const mxArray *prhs[]) {
     // function table
@@ -57,12 +57,12 @@ void func_lut(char *command,
     for(int i = 0; func_name_lut[i] != NULL; i++) {
         if(!strcmp(command, func_name_lut[i])) {
             func_ptr_lut[i](nlhs, plhs, nrhs, prhs);
-            return;
+            return 0;
         }
     }
     
     // no match in the function name lookup table
-    mexErrMsgTxt("No such command");
+    return -1;
 }             
 
 #endif

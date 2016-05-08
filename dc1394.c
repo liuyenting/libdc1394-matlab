@@ -30,4 +30,11 @@
  */
 void mexFunction(int nlhs, mxArray *plhs[],
                  int nrhs, const mxArray *prhs[]) {
+    if(nrhs < 1)
+        mexErrMsgTxt("Not enough input arguments");
+    
+    char *command = (char *)mxArrayToString(prhs[0]);
+    
+    if(!func_lut(command, nlhs, plhs, nrhs, prhs))
+        mexErrMsgTxt("No such command");
 }
