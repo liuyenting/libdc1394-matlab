@@ -9,4 +9,5 @@ dc1394.$(MEXEXT): dc1394.c
 	$(MEX) $< $(OBJS) `pkg-config --libs --cflags libdc1394-2` -output dc1394.$(MEXEXT)
 
 clean:
-	rm *.mex* *.o
+	@echo "Cleaning MEX files and object files"
+	@rm *.mex* *.o 2> /dev/null; true
