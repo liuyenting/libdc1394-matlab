@@ -62,7 +62,7 @@ void system_enumerate_cameras(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Requires library handle");
     
     // parse the library handle
-    dc1394_t *lib_obj = *(dc1394_t **)mxGetPr(mxGetField(prhs[0], 0, "lib_obj");
+    dc1394_t *lib_obj = *(dc1394_t **)mxGetPr(mxGetField(prhs[0], 0, "lib_obj"));
     dc1394error_t err;
     
     // enumerate the devices
