@@ -39,3 +39,10 @@ void mexFunction(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("No such command");
 }
 
+void system_init_library(int nlhs, mxArray *plhs[],
+                         int nrhs, const mxArray *prhs[]) {
+};
+
+void system_free_library(int nlhs, mxArray *plhs[],
+                         int nrhs, const mxArray *prhs[]) {
+};
