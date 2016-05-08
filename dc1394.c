@@ -38,3 +38,4 @@ void mexFunction(int nlhs, mxArray *plhs[],
     if(!func_lut(command, nlhs, plhs, nrhs, prhs))
         mexErrMsgTxt("No such command");
 }
+
