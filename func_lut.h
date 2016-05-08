@@ -36,14 +36,18 @@ int func_lut(char *command,
                                   int nrhs, const mxArray *prhs[]) = {
         system_init_library,
         system_free_library,
-        system_enumerate_devcies
+        system_enumerate_cameras,
+        system_init_camera,
+        system_free_camera
     };
     
     // function name
     static const char *func_name_lut[] = {
         "init_library",
         "free_library",
-        "enumerate_devices",
+        "enumerate_cameras",
+        "init_camera",
+        "free_camera",
         NULL
     };
     
