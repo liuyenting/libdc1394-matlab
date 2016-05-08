@@ -24,7 +24,8 @@
 #define FUNC_LUT_H
 
 #include <mex.h>
-#include <stdio.h>
+#include <stddef.h>
+#include <string.h>
 
 // using wrapper function to avoid illegal access
 int func_lut(char *command,
@@ -40,7 +41,7 @@ int func_lut(char *command,
     // function name
     static const char *func_name_lut[] = {
         "init_library",
-        "free_library"
+        "free_library",
         NULL
     };
     
