@@ -37,6 +37,6 @@ void mexFunction(int nlhs, mxArray *plhs[],
     
     char *command = (char *)mxArrayToString(prhs[0]);
     
-    if(!func_lut(command, nlhs, plhs, nrhs, prhs))
+    if(func_lut(command, nlhs, plhs, nrhs, prhs) < 0)
         mexErrMsgTxt("No such command");
 }

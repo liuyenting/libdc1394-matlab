@@ -76,7 +76,8 @@ void system_enumerate_cameras(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("No camera found");
     } else {
         // create the array to store GUIDs
-        plhs[0] = mxCreateNumericArray(1, cam_list->num, mxUINT64_CLASS, mxREAL);
+        const mwSize dims[] = { cam_list->num };
+        plhs[0] = mxCreateNumericArray(1, dims, mxUINT64_CLASS, mxREAL);
         uint64_t *output_mat = (uint64_t *)mxGetData(plhs[0]);
         
         // store the GUIDs into array

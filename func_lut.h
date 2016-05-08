@@ -29,8 +29,8 @@
 
 // using wrapper function to avoid illegal access
 int func_lut(char *command,
-              int nlhs, mxArray *plhs[],
-              int nrhs, const mxArray *prhs[]) {
+             int nlhs, mxArray *plhs[],
+             int nrhs, const mxArray *prhs[]) {
     // function table
     static void (*func_ptr_lut[])(int nlhs, mxArray *plhs[], 
                                   int nrhs, const mxArray *prhs[]) = {
