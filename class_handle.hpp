@@ -33,7 +33,7 @@ template <class base_class> class class_handle
 public:
 	class_handle(base_class *ptr)
 		: ptr_m(ptr), name_m(typeid(base_class).name()) {
-		signature_m = CLASS_HANDLE_SIGNATURE;
+		signature_m = CLASS_SIGNATURE;
 	}
 	~class_handle() {
 		signature_m = 0;
