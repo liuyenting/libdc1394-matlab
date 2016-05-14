@@ -128,16 +128,20 @@ void lib_enumerate(int nlhs, mxArray *plhs[],
 	dc1394 *lib_obj = mat2ptr<dc1394>(prhs[0]);
 
 	std::vector<uint64_t> cam_list = lib_obj->enumerate_cameras();
-
-	// create the array to store GUIDs
 	int total_cams = cam_list.size();
-	const mwSize dims[] = { cam_list.size() };
-	plhs[0] = mxCreateNumericArray(1, dims, mxUINT64_CLASS, mxREAL);
-	uint64_t *output_mat = (uint64_t *)mxGetData(plhs[0]);
 
-	// store the GUIDs into array
-	for(int i = 0; i < total_cams; i++)
-		output_mat[i] = cam_list[i];
+	if(total_cams == 0)
+		mexErrMsgTxt("No camera found");
+	else {
+		// create the array to store GUIDs
+		const mwSize dims[] = { static_cast<mwSize>(cam_list.size()) };
+		plhs[0] = mxCreateNumericArray(1, dims, mxUINT64_CLASS, mxREAL);
+		uint64_t *output_mat = (uint64_t *)mxGetData(plhs[0]);
+
+		// store the GUIDs into array
+		for(int i = 0; i < total_cams; i++)
+			output_mat[i] = cam_list[i];
+	}
 }
 
 void cam_connect(int nlhs, mxArray *plhs[],
