@@ -7,9 +7,9 @@ MEXEXT=$(shell ${MATLAB_BIN}/mexext)
 
 BIN_NAME=dc1394_mex
 
-$(BIN_NAME).$(MEXEXT): dc1394.cpp dc1394_mex.cpp
-	$(MEX) $< $(OBJS) `pkg-config --libs --cflags libdc1394-2` -output $(BIN_NAME).$(MEXEXT)
+$(BIN_NAME).$(MEXEXT): dc1394_mex.cpp dc1394.cpp
+	$(MEX) dc1394_mex.cpp dc1394.cpp `pkg-config --libs --cflags libdc1394-2` -output $(BIN_NAME).$(MEXEXT)
 
 clean:
 	@echo "Cleaning MEX files and object files"
-	@rm *.mex* *.o 2> /dev/null; true
+	@rm *.mex* *.o *.txt 2> /dev/null; true
