@@ -26,6 +26,8 @@
 #define CLASS_HANDLE_HPP
 
 #include "mex.h"
+#include <cstddef>
+#include <string>
 
 #define CLASS_SIGNATURE 0xFF00F0A5
 template <class base_class> class class_handle
