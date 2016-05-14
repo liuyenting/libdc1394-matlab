@@ -36,15 +36,15 @@
 /*
  * Prototypes
  */
-void mexFunction(int, mxArray *, int, const mxArray *);
-int func_lut(char *, int, mxArray *, int, const mxArray *);
+void mexFunction(int, mxArray *[], int, const mxArray *[]);
+int func_lut(char *, int, mxArray *[], int, const mxArray *[]);
 
-void lib_init(int, mxArray *, int, const mxArray *);
-void lib_delete(int, mxArray *, int, const mxArray *);
-void lib_enumerate(int, mxArray *, int, const mxArray *);
+void lib_init(int, mxArray *[], int, const mxArray *[]);
+void lib_delete(int, mxArray *[], int, const mxArray *[]);
+void lib_enumerate(int, mxArray *[], int, const mxArray *[]);
 
-void cam_connect(int, mxArray *, int, const mxArray *);
-void cam_disconnect(int, mxArray *, int, const mxArray *);
+void cam_connect(int, mxArray *[], int, const mxArray *[]);
+void cam_disconnect(int, mxArray *[], int, const mxArray *[]);
 
 /*
  * The gateway function
@@ -127,7 +127,7 @@ void lib_enumerate(int nlhs, mxArray *plhs[],
 	// acquire the library object
 	dc1394 *lib_obj = mat2ptr<dc1394>(prhs[0]);
 
-	cam_list = lib_obj->enumerate_cameras();
+	std::vector<uint64_t> cam_list = lib_obj->enumerate_cameras();
 
 	// create the array to store GUIDs
 	int total_cams = cam_list.size();
