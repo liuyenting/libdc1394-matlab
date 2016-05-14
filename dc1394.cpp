@@ -22,33 +22,41 @@
  * SOFTWARE.
  */
 
-#ifndef DC1394_HPP
-#define DC1394_HPP
-
+#include <mex.h>
 #include <cstddef>
+#include <string>
 #include <vector>
 #include <dc1394/dc1394.h>
 
-class dc1394
-{
-public:
-	// init/deinit the library object
-	dc1394();
-	~dc1394();
+#include "dc1394.hpp"
 
-	// enumerate all valid cameras
-	std::vector<uint64_t> enumerate_cameras();
+dc1394::dc1394() {
+	lib_obj = dc1394_new();
+}
 
-	// connect/disconnect camera
-	void connect();
-	void disconnect();
+dc1394::~dc1394() {
+	dc1394_free(lib_obj);
+}
 
-	// capture frame
-	void capture();
+std::vector<uint64_t> dc1394::enumerate_cameras() {
+	dc1394camera_list_t *cam_list;
 
-private:
-	dc1394_t *lib_obj;
-	dc1394error_t err;
-};
+	err = dc1394_camera_enumerate(lib_obj, &cam_list);
+	if(err != DC1394_SUCCESS) {
+		dc1394_camera_free_list(cam_list);
+		dc1394_free(lib_obj);
+		throw std::runtime_error("dc1394: Unable to enumerate cameras.");
+	}
 
-#endif
+	std::vector<uint64_t> guid_list;
+	if(cam_list->num == 0)
+		fprint(stderr, "dc1394: No camera found.");
+	else {
+		// store GUIDs into the vector
+		for(int i = 0; i < cam_list->num; i++)
+			guid_list.push_back(cam_list->ids[i].guid);
+	}
+
+	dc1394_camera_free_list(cam_list);
+	return guid_list;
+}
