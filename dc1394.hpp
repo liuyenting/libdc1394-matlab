@@ -25,6 +25,9 @@
 #ifndef DC1394_HPP
 #define DC1394_HPP
 
+#include <cstddef>
+#include <vector>
+
 class dc1394
 {
 public:
@@ -33,7 +36,7 @@ public:
 	~dc1394();
 
 	// enumerate all valid cameras
-	void enumerate_cameras();
+	std::vector<uint64_t> enumerate_cameras();
 
 	// connect/disconnect camera
 	void connect();
